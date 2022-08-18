@@ -10,7 +10,7 @@ const publicationSchema = new Schema({
   file: {
     type: String,
   },
-  owner: { type: Schema.Types.ObjetId, ref: "User" },
+  owner: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const PublicationModel = model("Publication", publicationSchema);

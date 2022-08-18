@@ -1,9 +1,9 @@
 const { Schema, model } = require("mongoose");
 
 const messageSchema = new Schema({
-  owner: { type: Schema.Types.ObjetId, ref: "User" },
+  owner: { type: Schema.Types.ObjectId, ref: "User" },
 
-  publication: { type: Schema.Types.ObjetId, ref: "Publication" },
+  publication: { type: Schema.Types.ObjectId, ref: "Publication" },
 
   text: {
     type: String,
@@ -11,6 +11,6 @@ const messageSchema = new Schema({
   },
 });
 
-const MessageModel = model("message", messageSchema);
+const MessageModel = model("Message", messageSchema);
 
 module.exports = MessageModel;
