@@ -14,6 +14,13 @@ router.post("/signup", async (req, res, next) => {
     res.status(400).json({ errorMessage: "Debes rellenar todos los campos" });
     return;
   }
+  let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (passwordRegex.test(password) === false) {
+    res.json({
+      errorMessage:
+        "Contraseña no valida, debes tener 8 caracteres, 1 letra, 1 numero",
+    });
+  }
 
   try {
     const foundUser = await UserModel.findOne({ email: email });
