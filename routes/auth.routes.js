@@ -40,11 +40,50 @@ router.post("/signup", async (req, res, next) => {
 });
 
 //POST LOGIN VERIFICAR USUARIO
+router.post("/login", async (req, res, next) => {
+  console.log(req.body);
+  const { email, password } = req.body;
+  //VALIDAR (RELLENAR CAMPOS)
+  if (!email || !password) {
+    res.status(400).json({ errorMessage: "Debes rellenar todos los campos" });
+    return;
+  }
 
-//VALIDAR (RELLENAR CAMPOS)
+  try {
+    const foundUser = await UserModel.findOne({ email: email });
+    if (foundUser === null) {
+      res.status(400).json({ errorMessage: "Usuario no registrado" });
+      return;
+    }
 
-//VALIDAR CONTRASEÑA
+    //VALIDAR CONTRASEÑA
+    const isPasswordValid = await bcryptjs.compare(
+      password,
+      foundUser.password
+    );
+    console.log("isPasswordValid", isPasswordValid);
+    if (isPasswordValid === false) {
+      res.status(400).json({ errorMessage: "Contraseña no valida" });
+      return;
+    }
+    // Usuario Validado
 
-//GET CHEKA EL TOKEN (USUARIO VALIDO)
+    //crear payload
+    const payload = {
+      _id: foundUser._id,
+      email: foundUser.email,
+    };
+
+    // generar token
+    const authToken = jwt.sign(payload, "BaNaNa", {
+      algorithm: HS256,
+      expiresIn: "6h",
+    });
+
+    res.json("probando ruta");
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
