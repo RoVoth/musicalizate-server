@@ -3,6 +3,8 @@ const bcryptjs = require("bcryptjs");
 const UserModel = require("../models/User.model");
 const jwt = require("jsonwebtoken");
 
+const isAuthenticated = require("../middlewares/isAuthenticated");
+
 //POST SIGNUP REGISTRO
 router.post("/signup", async (req, res, next) => {
   console.log(req.body);
@@ -75,15 +77,23 @@ router.post("/login", async (req, res, next) => {
     };
 
     // generar token
-    const authToken = jwt.sign(payload, "BaNaNa", {
-      algorithm: HS256,
+    const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+      algorithm: "HS256",
       expiresIn: "6h",
     });
 
-    res.json("probando ruta");
+    res.json({ authToken: authToken });
   } catch (error) {
     next(error);
   }
+});
+
+//GET verify
+router.get("/verify", isAuthenticated, (req, res, next) => {
+  console.log("verificando token");
+  console.log(req.payload);
+
+  res.json(req.payload);
 });
 
 module.exports = router;

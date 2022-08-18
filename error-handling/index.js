@@ -9,13 +9,15 @@ module.exports = (app) => {
     // always logs the error
     console.error("ERROR", req.method, req.path, err);
 
+    if (err.status === 401) {
+      res.status(401).json({ errorMessage: "Usuario no autorizado" });
+    }
+
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {
-      res
-        .status(500)
-        .json({
-          errorMessage: "Internal server error. Check the server console",
-        });
+      res.status(500).json({
+        errorMessage: "Internal server error. Check the server console",
+      });
     }
   });
 };
