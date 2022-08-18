@@ -14,6 +14,7 @@ router.post("/signup", async (req, res, next) => {
     res.status(400).json({ errorMessage: "Debes rellenar todos los campos" });
     return;
   }
+  // Validas Contraseña
   let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   if (passwordRegex.test(password) === false) {
     res.json({
