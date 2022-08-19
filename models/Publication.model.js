@@ -1,6 +1,10 @@
 const { Schema, model } = require("mongoose");
 
 const publicationSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   category: {
     type: String,
     enum: ["Jamming", "My Own Song", "Cover", "Other"],

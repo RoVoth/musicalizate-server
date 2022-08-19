@@ -14,7 +14,7 @@ router.post("/signup", async (req, res, next) => {
     res.status(400).json({ errorMessage: "Debes rellenar todos los campos" });
     return;
   }
-  // Validas Contraseña
+  // Validar Contraseña
   let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   if (passwordRegex.test(password) === false) {
     res.json({
@@ -87,7 +87,7 @@ router.post("/login", async (req, res, next) => {
     // generar token
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
-      expiresIn: "6h",
+      expiresIn: "48h",
     });
 
     res.json({ authToken: authToken });
