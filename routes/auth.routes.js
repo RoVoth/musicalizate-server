@@ -87,7 +87,7 @@ router.post("/login", async (req, res, next) => {
     // generar token
     const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
       algorithm: "HS256",
-      expiresIn: "48h",
+      expiresIn: "68h",
     });
 
     res.json({ authToken: authToken });

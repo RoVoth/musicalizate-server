@@ -37,7 +37,10 @@ router.get("/:messageId", isAuthenticated, async (req, res, next) => {
 
 router.delete("/:messageId", isAuthenticated, async (req, res, next) => {
   try {
-    await MessageModel.findByIdAndDelete(req.params.id);
+    await MessageModel.findOneAndDelete(
+      { owner: req.payload._id },
+      { _id: req.params._id }
+    );
 
     res.json("mensaje borrado");
   } catch (error) {
