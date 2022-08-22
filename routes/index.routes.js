@@ -17,4 +17,7 @@ router.use("/publication", publicationRoutes);
 const messageRoutes = require("./message.routes");
 router.use("/message", messageRoutes);
 
+const uploadRoutes = require("./upload.routes");
+router.use("/upload", uploadRoutes);
+
 module.exports = router;

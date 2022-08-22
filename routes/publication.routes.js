@@ -17,6 +17,7 @@ router.get("/", async (req, res, next) => {
 //POST
 router.post("/", isAuthenticated, async (req, res, next) => {
   const { title, category, description, file } = req.body;
+  console.log(req.body);
   if (!title || !category || !description || !file) {
     res.json({ errorMessage: "campos no completados" });
   }
