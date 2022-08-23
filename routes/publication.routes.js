@@ -5,6 +5,17 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 // AQUI VAN TODAS LAS RUTAS
 
 //GET
+router.get("/personalPublication", isAuthenticated, async (req, res, next) => {
+  try {
+    console.log(req.payload._id);
+    const allPublicationTitles = await PublicationModel.find({
+      owner: req.payload._id,
+    }).select("title");
+    res.json(allPublicationTitles);
+  } catch (error) {
+    next(error);
+  }
+});
 router.get("/", async (req, res, next) => {
   try {
     const allPublicationTitles = await PublicationModel.find().select("title");

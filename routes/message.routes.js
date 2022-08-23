@@ -4,10 +4,10 @@ const PublicationModel = require("../models/Publication.model");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
 //POST crear comentario
-router.post("/:messageId", isAuthenticated, async (req, res, next) => {
+router.post("/:publicationId", isAuthenticated, async (req, res, next) => {
   const { publicationId } = req.params;
   const { text } = req.body;
-
+  console.log("publication", publicationId);
   try {
     await MessageModel.create({
       owner: req.payload._id,
@@ -23,10 +23,12 @@ router.post("/:messageId", isAuthenticated, async (req, res, next) => {
 //GET mostrar comentario
 
 router.get("/:messageId", isAuthenticated, async (req, res, next) => {
-  const { id } = req.params;
-
+  const { messageId } = req.params;
+  console.log(messageId);
   try {
-    const messagePublication = await MessageModel.find({ publication: id });
+    const messagePublication = await MessageModel.find({
+      publication: messageId,
+    });
     res.json(messagePublication);
   } catch (error) {
     next(error);

@@ -97,11 +97,13 @@ router.post("/login", async (req, res, next) => {
 });
 
 //GET verify
-router.get("/verify", isAuthenticated, (req, res, next) => {
+router.get("/verify", isAuthenticated, async (req, res, next) => {
+  const foundUser = await UserModel.findOne({ email: req.payload.email });
   console.log("verificando token");
+  console.log("founduser", foundUser);
   console.log(req.payload);
 
-  res.json(req.payload);
+  res.json({ ...req.payload, username: foundUser.username });
 });
 
 module.exports = router;
