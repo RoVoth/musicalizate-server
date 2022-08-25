@@ -1,16 +1,19 @@
 const router = require("express").Router();
 const MessageModel = require("../models/Message.model");
-const PublicationModel = require("../models/Publication.model");
+const UserModel = require("../models/User.model");
 const isAuthenticated = require("../middlewares/isAuthenticated");
 
 //POST crear comentario
 router.post("/:publicationId", isAuthenticated, async (req, res, next) => {
   const { publicationId } = req.params;
   const { text } = req.body;
-  console.log("publication", publicationId);
+  const foundUser = await UserModel.findOne({ _id: req.payload._id });
+  console.log("foundUser", foundUser);
+
   try {
     await MessageModel.create({
       owner: req.payload._id,
+      username: foundUser.username,
       publication: publicationId,
       text: text,
     });

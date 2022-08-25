@@ -7,7 +7,7 @@ const publicationSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ["Jamming", "My Own Song", "Cover", "Other"],
+    enum: ["Pruebas", "Canción Propia", "Versión", "Otros"],
     required: true,
   },
   description: String,

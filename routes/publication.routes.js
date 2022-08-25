@@ -10,7 +10,7 @@ router.get("/personalPublication", isAuthenticated, async (req, res, next) => {
     console.log(req.payload._id);
     const allPublicationTitles = await PublicationModel.find({
       owner: req.payload._id,
-    }).select("title");
+    }).select("title category description file");
     res.json(allPublicationTitles);
   } catch (error) {
     next(error);
@@ -18,7 +18,9 @@ router.get("/personalPublication", isAuthenticated, async (req, res, next) => {
 });
 router.get("/", async (req, res, next) => {
   try {
-    const allPublicationTitles = await PublicationModel.find().select("title");
+    const allPublicationTitles = await PublicationModel.find().select(
+      "title category description file"
+    );
     res.json(allPublicationTitles);
   } catch (error) {
     next(error);
